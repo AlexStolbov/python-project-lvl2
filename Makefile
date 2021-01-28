@@ -14,7 +14,7 @@ package-install:
 	python3 -m pip install --force --user dist/*.whl
 
 lint:
-	poetry run flake8 brain_games
+	poetry run flake8 hexlet_python_package
 
 run3:
 	poetry run gendiff -f j resource/step3/lvl2_original.json resource/step3/lvl2_modified.json

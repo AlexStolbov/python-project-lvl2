@@ -18,7 +18,6 @@ def generate_diff(file_original, file_changed):
         else:
             res.append('- {}: {}'.format(key, origin[key]))
             res.append('+ {}: {}'.format(key, modified[key]))
-    # for key in
     return '{}\n{}\n{}'.format('{', '\n'.join(res), '}')
 
 

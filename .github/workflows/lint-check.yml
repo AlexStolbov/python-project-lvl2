@@ -25,3 +25,5 @@ jobs:
           make install
       - name: Run linter
         run: make lint
+      - name: Run tests
+          run: make runtests

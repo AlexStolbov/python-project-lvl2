@@ -15,9 +15,13 @@ package-install:
 
 lint:
 	poetry run flake8 hexlet_python_package
+	poetry run flake8 tests
 
 run3:
-	poetry run gendiff -f j resource/step3/lvl2_original.json resource/step3/lvl2_modified.json
+	poetry run gendiff -f j tests/fixtures/step3/lvl2_original.json tests/fixtures/step3/lvl2_modified.json
 
 run3abs:
-	poetry run gendiff -f j ~/all/PythonProjects//Hexlet/python-project-lvl2/resource/step3/lvl2_original.json ~/all/PythonProjects//Hexlet/python-project-lvl2/resource/step3/lvl2_modified.json
+	poetry run gendiff -f j ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step3/lvl2_original.json ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step3/lvl2_modified.json
+
+runtests:
+	poetry run pytest

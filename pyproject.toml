@@ -8,9 +8,10 @@ packages = [
     { include = "hexlet_python_package" },
 ]
 
-    [tool.poetry.dependencies]
+[tool.poetry.dependencies]
 python = "^3.8"
     flake8 = "^3.8.4"
+    pytest = "^6.2.2"
 
 [tool.poetry.dev-dependencies]
 

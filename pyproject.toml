@@ -5,7 +5,7 @@ description = "project lvl2"
 authors = ["Stolbov Alex"]
 
 packages = [
-    { include = "hexlet_python_package" },
+    { include = "gendiff" },
 ]
 
 [tool.poetry.dependencies]
@@ -20,4 +20,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-gendiff = "hexlet_python_package.scripts.gendiff:main"
+gendiff = "gendiff.scripts.gendiff:main"

@@ -1,4 +1,4 @@
-from hexlet_python_package.scripts.gendiff import generate_diff
+from gendiff.scripts.gendiff import generate_diff
 import os.path
 
 FIXTURES_DIR = 'tests/fixtures/step3'

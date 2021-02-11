@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-from hexlet_python_package.engine.compare_files import generate_diff
+from gendiff.engine.compare_files import generate_diff
 
 
 def main():

@@ -14,7 +14,7 @@ package-install:
 	python3 -m pip install --force --user dist/*.whl
 
 lint:
-	poetry run flake8 hexlet_python_package
+	poetry run flake8 gendiff
 	poetry run flake8 tests
 
 run3:

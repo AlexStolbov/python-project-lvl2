@@ -1,7 +1,7 @@
 from gendiff.scripts.gendiff import generate_diff
 import os.path
 
-FIXTURES_DIR = 'tests/fixtures/step3'
+FIXTURES_DIR = 'tests/fixtures/step4'
 
 
 def test_gendiff():

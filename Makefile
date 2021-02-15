@@ -17,11 +17,11 @@ lint:
 	poetry run flake8 gendiff
 	poetry run flake8 tests
 
-run3:
-	poetry run gendiff -f j tests/fixtures/step3/lvl2_original.json tests/fixtures/step3/lvl2_modified.json
+run4:
+	poetry run gendiff -f j tests/fixtures/step4/lvl2_original.json tests/fixtures/step4/lvl2_modified.json
 
-run3abs:
-	poetry run gendiff -f j ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step3/lvl2_original.json ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step3/lvl2_modified.json
+run4abs:
+	poetry run gendiff -f j ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_original.json ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_modified.json
 
 runtests:
 	poetry run pytest

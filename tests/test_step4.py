@@ -1,13 +1,14 @@
 from gendiff.scripts.gendiff_script import generate_diff
-import os.path
+from os import path
 
-FIXTURES_DIR = 'tests/fixtures/step4'
+FIXTURES_DIR = 'fixtures/step4'
 
 
 def test_gendiff():
-    path_origin = os.path.join(FIXTURES_DIR, 'lvl2_original.json')
-    path_modified = os.path.join(FIXTURES_DIR, 'lvl2_modified.json')
-    path_should_be = os.path.join(FIXTURES_DIR, 'should_be.txt')
+    current_dir = path.dirname(__file__)
+    path_origin = path.join(current_dir, FIXTURES_DIR, 'lvl2_original.json')
+    path_modified = path.join(current_dir, FIXTURES_DIR, 'lvl2_modified.json')
+    path_should_be = path.join(current_dir, FIXTURES_DIR, 'should_be.txt')
     res = generate_diff(path_origin, path_modified)
     should_be = open(path_should_be).read()
     assert res == should_be

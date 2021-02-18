@@ -1,25 +1,14 @@
-import json
+
+from gendiff.engine.parsers import parse_files
 
 
-def generate_diff(file_original, file_changed):
-    origin = load_file(file_original)
-    modified = load_file(file_changed)
-    origin_keys = list(origin.keys())
-    modified_keys = list(modified.keys())
-    all_keys = sorted(set(origin_keys + modified_keys))
+def generate_diff(file_original, file_modified):
+    parse_result = parse_files(file_original, file_modified)
+    all_keys = sorted(list(parse_result.keys()))
     res = []
     for key in all_keys:
-        if key not in origin_keys:
-            res.append('+ {}: {}'.format(key, modified[key]))
-        elif key not in modified_keys:
-            res.append('- {}: {}'.format(key, origin[key]))
-        elif origin[key] == modified[key]:
-            res.append('  {}: {}'.format(key, origin[key]))
-        else:
-            res.append('- {}: {}'.format(key, origin[key]))
-            res.append('+ {}: {}'.format(key, modified[key]))
+        for change in parse_result[key]:
+            res.append('{} {}: {}'.format(change['added'], key, change['value']))
     return '{}\n{}\n{}'.format('{', '\n'.join(res), '}')
 
 
-def load_file(file_path):
-    return json.load(open(file_path))

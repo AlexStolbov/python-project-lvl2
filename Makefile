@@ -23,6 +23,9 @@ run4:
 run4abs:
 	poetry run gendiff -f j ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_original.json ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_modified.json
 
+run5:
+	poetry run gendiff -f j tests/fixtures/step5/original.yml tests/fixtures/step5/modified.yml
+
 runtests:
 	poetry run pytest
 

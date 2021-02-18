@@ -19,6 +19,7 @@ def load_file(file_path):
     """
     Load json or yaml file
     """
+
     def is_json(file_name):
         """
         Simple check
@@ -39,7 +40,7 @@ def load_file(file_path):
         return None
 
 
-def parse_data(origin_data,  modified_data):
+def parse_data(origin_data, modified_data):
     origin_keys = list(origin_data.keys())
     modified_keys = list(modified_data.keys())
     all_keys = set(origin_keys + modified_keys)

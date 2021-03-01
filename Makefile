@@ -18,13 +18,19 @@ lint:
 	poetry run flake8 tests
 
 run4:
-	poetry run gendiff -f j tests/fixtures/step4/lvl2_original.json tests/fixtures/step4/lvl2_modified.json
+	poetry run gendiff tests/fixtures/step4/lvl2_original.json tests/fixtures/step4/lvl2_modified.json
 
 run4abs:
-	poetry run gendiff -f j ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_original.json ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_modified.json
+	poetry run gendiff ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_original.json ~/all/PythonProjects/Hexlet/python-project-lvl2/tests/fixtures/step4/lvl2_modified.json
 
 run5:
-	poetry run gendiff -f j tests/fixtures/step5/original.yml tests/fixtures/step5/modified.yml
+	poetry run gendiff tests/fixtures/step5/original.yml tests/fixtures/step5/modified.yml
+
+run6json:
+	poetry run gendiff tests/fixtures/step6/file1.json tests/fixtures/step6/file2.json
+
+run6yml:
+	poetry run gendiff tests/fixtures/step6/file1.yml tests/fixtures/step6/file2.yml
 
 runtests:
 	poetry run pytest

@@ -40,19 +40,59 @@ def load_file(file_path):
         return None
 
 
-def parse_data(origin_data, modified_data):
-    origin_keys = list(origin_data.keys())
-    modified_keys = list(modified_data.keys())
-    all_keys = set(origin_keys + modified_keys)
+def parse_data(old_data, new_data):
     res = {}
-    for key in all_keys:
-        if key not in origin_keys:
-            res[key] = [{'added': '+', 'value': modified_data[key]}]
-        elif key not in modified_keys:
-            res[key] = [{'added': '-', 'value': origin_data[key]}]
-        elif origin_data[key] == modified_data[key]:
-            res[key] = [{'added': ' ', 'value': origin_data[key]}]
+    old_keys = set(old_data.keys())
+    new_keys = set(new_data.keys())
+    res.update(add_new_or_del_keys(old_data, old_keys - new_keys, '_DEL_'))
+    res.update(add_new_or_del_keys(new_data, new_keys - old_keys, '_NEW_'))
+    res.update(add_stay_keys(old_data, new_data, old_keys & new_keys))
+    return res
+
+
+def add_new_or_del_keys(data, keys, key_status):
+    res = {}
+    for key in keys:
+        res[key] = make_key_description(key_status, key_value=data[key])
+    return res
+
+
+def add_stay_keys(old_data, new_data, keys):
+    res = {}
+    for key in keys:
+        if isinstance(old_data[key], dict) and isinstance(new_data[key], dict):
+            res.update(add_node(old_data, new_data, key))
         else:
-            res[key] = [{'added': '-', 'value': origin_data[key]},
-                        {'added': '+', 'value': modified_data[key]}, ]
+            res.update(add_simple_key(old_data, new_data, key))
+    return res
+
+
+def add_node(old_data, new_data, key):
+    res = {}
+    children = parse_data(old_data[key], new_data[key])
+    res[key] = make_key_description('_STAY_', children=children)
+    return res
+
+
+def add_simple_key(old_data, new_data, key):
+    res = {}
+    old_value = old_data[key]
+    new_value = new_data[key]
+    if old_value == new_value:
+        diff = make_key_description('_STAY_',
+                                    key_value=old_value)
+    else:
+        diff = make_key_description('_CHANGE_',
+                                    key_value={'_OLD_': old_value,
+                                               '_NEW_': new_value})
+    res[key] = diff
+    return res
+
+
+def make_key_description(key_status, key_value=None, children=None):
+    res = {'_STATUS_': key_status}
+    if key_value is not None:
+        res['_VALUE_'] = key_value
+    if children is not None:
+        res['_CHILDREN_'] = children
     return res

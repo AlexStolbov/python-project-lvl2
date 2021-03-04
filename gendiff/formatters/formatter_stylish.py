@@ -1,21 +1,21 @@
-def stylish(diff):
-    stylish_data = diff_to_stylish(diff)
-    list_data = stylish_to_list(stylish_data)
+def get_stylish(diff):
+    stylish_dict = diff_to_uniform_dict(diff)
+    list_data = stylish_to_list(stylish_dict)
     res = '{}\n{}\n{}'.format('{', '\n'.join(list_data), '}')
     return res
 
 
-def diff_to_stylish(data):
+def diff_to_uniform_dict(data):
     sorted_keys = sorted(list(data.keys()))
     res = {}
     for key in sorted_keys:
         key_description = data[key]
-        key_status = key_description['_STATUS_']
         children = key_description.get('_CHILDREN_', None)
         if children:
-            value = diff_to_stylish(children)
-            res[get_stylish_key(key_status, key)] = value
+            value = diff_to_uniform_dict(children)
+            res[key] = value
         else:
+            key_status = key_description['_STATUS_']
             value = key_description['_VALUE_']
             if key_status == '_CHANGE_':
                 res[get_stylish_key('_DEL_', key)] = value['_OLD_']
@@ -58,8 +58,8 @@ def format_value(value):
         shift = ' '
     if value is True:
         value = 'true'
-    if value is False:
+    elif value is False:
         value = 'false'
-    if value is None:
+    elif value is None:
         value = 'null'
     return '{}{}'.format(shift, value)

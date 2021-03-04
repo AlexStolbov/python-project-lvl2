@@ -32,6 +32,12 @@ run6json:
 run6yml:
 	poetry run gendiff tests/fixtures/step6/file1.yml tests/fixtures/step6/file2.yml
 
+run7stylish:
+	poetry run gendiff --format stylish tests/fixtures/step6/file1.json tests/fixtures/step6/file2.json
+
+run7plain:
+	poetry run gendiff --format plain tests/fixtures/step6/file1.json tests/fixtures/step6/file2.json
+
 runtests:
 	poetry run pytest
 

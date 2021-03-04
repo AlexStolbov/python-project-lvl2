@@ -70,7 +70,7 @@ def add_stay_keys(old_data, new_data, keys):
 def add_node(old_data, new_data, key):
     res = {}
     children = parse_data(old_data[key], new_data[key])
-    res[key] = make_key_description('_STAY_', children=children)
+    res[key] = make_key_description(children=children)
     return res
 
 
@@ -89,8 +89,10 @@ def add_simple_key(old_data, new_data, key):
     return res
 
 
-def make_key_description(key_status, key_value=None, children=None):
-    res = {'_STATUS_': key_status}
+def make_key_description(key_status=None, key_value=None, children=None):
+    res = {}
+    if key_status is not None:
+        res['_STATUS_'] = key_status
     if key_value is not None:
         res['_VALUE_'] = key_value
     if children is not None:

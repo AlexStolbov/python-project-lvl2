@@ -1,7 +1,18 @@
 from os import path
-from gendiff.scripts.gendiff_script import generate_diff
+from gendiff.scripts.gendiff_script import generate_diff, parse_args
 
 FIXTURES_DIR_6 = 'fixtures/step6'
+
+
+def test_parse_args():
+    params = {'first_file': 'file1',
+              'second_file': 'file2',
+              'format': 'stylish'}
+    args = parse_args(['--format', params['format'],
+                       params['first_file'],
+                       params['second_file']])
+    args_dict = vars(args)
+    assert params == args_dict
 
 
 def test_gendiff_json():
@@ -27,3 +38,4 @@ def test_gendiff_yaml():
 if __name__ == '__main__':
     test_gendiff_json()
     test_gendiff_yaml()
+    test_parse_args()

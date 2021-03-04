@@ -7,4 +7,4 @@
 ### Codeclimate Test Coverage
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c5e6a206e48eb7f81acb/test_coverage)](https://codeclimate.com/github/AlexStolbov/python-project-lvl2/test_coverage)
 ### Asciinema Step 3:
-[![asciicast](https://asciinema.org/a/qfojhn0bh0INPrtCfmmBTKug3.svg)](https://asciinema.org/a/qfojhn0bh0INPrtCfmmBTKug3)
+![asciicast](https://asciinema.org/a/rlFdp7cH4s1EW0PEXyFNUDmAQ.svg)](https://asciinema.org/a/rlFdp7cH4s1EW0PEXyFNUDmAQ)

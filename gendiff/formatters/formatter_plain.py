@@ -10,8 +10,7 @@ def diff_to_list(data, prefix=''):
         children = key_description.get('_CHILDREN_', None)
         if children:
             children_keys = diff_to_list(children,
-                                         prefix='{}{}.'.format(prefix,
-                                                                     key))
+                                         prefix='{}{}.'.format(prefix, key))
             res += children_keys
         else:
             key_status = key_description['_STATUS_']

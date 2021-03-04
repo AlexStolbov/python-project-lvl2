@@ -19,4 +19,3 @@ def parse_args(args):
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     return parser.parse_args(args)
-

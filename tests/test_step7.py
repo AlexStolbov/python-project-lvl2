@@ -1,7 +1,7 @@
 from os import path
 from gendiff.engine.parsers import parse_files
 from gendiff.formatters.formatter_plain import get_plain
-from tests.tests_step6 import FIXTURES_DIR_6
+from tests.test_step6 import FIXTURES_DIR_6
 
 FIXTURES_DIR_7 = 'fixtures/step7'
 

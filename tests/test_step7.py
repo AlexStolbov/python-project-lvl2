@@ -6,7 +6,7 @@ from tests.test_step6 import FIXTURES_DIR_6
 FIXTURES_DIR_7 = 'fixtures/step7'
 
 
-def get_diff():
+def get_diff_from_json():
     current_dir = path.dirname(__file__)
     file_original = path.join(current_dir, FIXTURES_DIR_6, 'file1.json')
     file_modified = path.join(current_dir, FIXTURES_DIR_6, 'file2.json')
@@ -17,7 +17,7 @@ def get_diff():
 
 def test_plain():
     current_dir = path.dirname(__file__)
-    diff = get_diff()
+    diff = get_diff_from_json()
     plain = get_plain(diff)
     # print(plain)
     path_should_be = path.join(current_dir, FIXTURES_DIR_7, 'plain.txt')
@@ -26,5 +26,4 @@ def test_plain():
 
 
 if __name__ == '__main__':
-    # test_diff_to_list()
     test_plain()

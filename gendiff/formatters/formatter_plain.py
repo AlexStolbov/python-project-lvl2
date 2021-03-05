@@ -5,22 +5,24 @@ def get_plain(diff):
 
 def diff_to_list(data, prefix=''):
     res = []
-    for key in data.keys():
-        key_description = data[key]
-        children = key_description.get('_CHILDREN_', None)
-        if children:
-            children_keys = diff_to_list(children,
-                                         prefix='{}{}.'.format(prefix, key))
+    for key, key_description in data.items():
+        if '_CHILDREN_' in key_description:
+            children_keys = diff_to_list(
+                key_description.get('_CHILDREN_', None),
+                prefix='{}{}.'.format(prefix, key))
             res += children_keys
         else:
-            key_status = key_description['_STATUS_']
-            if key_status != '_STAY_':
-                value = key_description['_VALUE_']
-                full_key = '{}{}'.format(prefix, key)
-                res.append('{}\'{}\' {}'.format('Property ', full_key,
-                                                format_description(key_status,
-                                                                   value)))
+            if key_description['_STATUS_'] != '_STAY_':
+                res.append(format_key(key, key_description, prefix))
     res.sort()
+    return res
+
+
+def format_key(key, key_description, prefix):
+    full_key = '{}{}'.format(prefix, key)
+    res = '{}\'{}\' {}'.format('Property ', full_key,
+                               format_description(key_description['_STATUS_'],
+                                                  key_description['_VALUE_']))
     return res
 
 

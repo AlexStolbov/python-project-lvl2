@@ -1,0 +1,102 @@
+{
+  "common": {
+    "_CHILDREN_": {
+      "follow": {
+        "_STATUS_": "_NEW_",
+        "_VALUE_": false
+      },
+      "setting1": {
+        "_STATUS_": "_STAY_",
+        "_VALUE_": "Value 1"
+      },
+      "setting2": {
+        "_STATUS_": "_DEL_",
+        "_VALUE_": 200
+      },
+      "setting3": {
+        "_STATUS_": "_CHANGE_",
+        "_VALUE_": {
+          "_NEW_": null,
+          "_OLD_": true
+        }
+      },
+      "setting4": {
+        "_STATUS_": "_NEW_",
+        "_VALUE_": "blah blah"
+      },
+      "setting5": {
+        "_STATUS_": "_NEW_",
+        "_VALUE_": {
+          "key5": "value5"
+        }
+      },
+      "setting6": {
+        "_CHILDREN_": {
+          "doge": {
+            "_CHILDREN_": {
+              "wow": {
+                "_STATUS_": "_CHANGE_",
+                "_VALUE_": {
+                  "_NEW_": "so much",
+                  "_OLD_": ""
+                }
+              }
+            }
+          },
+          "key": {
+            "_STATUS_": "_STAY_",
+            "_VALUE_": "value"
+          },
+          "ops": {
+            "_STATUS_": "_NEW_",
+            "_VALUE_": "vops"
+          }
+        }
+      }
+    }
+  },
+  "group1": {
+    "_CHILDREN_": {
+      "baz": {
+        "_STATUS_": "_CHANGE_",
+        "_VALUE_": {
+          "_NEW_": "bars",
+          "_OLD_": "bas"
+        }
+      },
+      "foo": {
+        "_STATUS_": "_STAY_",
+        "_VALUE_": "bar"
+      },
+      "nest": {
+        "_STATUS_": "_CHANGE_",
+        "_VALUE_": {
+          "_NEW_": "str",
+          "_OLD_": {
+            "key": "value"
+          }
+        }
+      }
+    }
+  },
+  "group2": {
+    "_STATUS_": "_DEL_",
+    "_VALUE_": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  "group3": {
+    "_STATUS_": "_NEW_",
+    "_VALUE_": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  }
+}

@@ -11,7 +11,7 @@ def get_diff_from_json():
     file_original = path.join(current_dir, FIXTURES_DIR_6, 'file1.json')
     file_modified = path.join(current_dir, FIXTURES_DIR_6, 'file2.json')
     diff = parse_files(file_original, file_modified)
-    # print(diff)
+    print(diff)
     return diff
 
 

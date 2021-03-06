@@ -37,5 +37,5 @@ def test_gendiff_yaml():
 
 if __name__ == '__main__':
     test_gendiff_json()
-    test_gendiff_yaml()
-    test_parse_args()
+    # test_gendiff_yaml()
+    # test_parse_args()

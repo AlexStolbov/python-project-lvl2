@@ -1,3 +1,6 @@
+import gendiff.engine.parsers as parsers
+
+
 def get_plain(diff):
     plain_dict = diff_to_list(diff)
     return '\n'.join(plain_dict)
@@ -13,15 +16,15 @@ def diff_to_list(diff, prefix=''):
 
 def parse_key_description(key_description, prefix):
     res = []
-    key = key_description['_KEY_']
-    if '_CHILDREN_' in key_description:
-        children = key_description['_CHILDREN_']
+    key = parsers.get_key(key_description)
+    if parsers.have_children(key_description):
+        children = parsers.get_children(key_description)
         children_keys = diff_to_list(children, get_new_prefix(prefix, key))
         res += children_keys
     else:
-        key_status = key_description['_STATUS_']
-        if key_status != '_STAY_':
-            value = key_description['_VALUE_']
+        key_status = parsers.get_status(key_description)
+        if key_status != parsers.STATUS_STAY:
+            value = parsers.get_value(key_description)
             full_key = get_new_prefix(prefix, key)
             res.append('{}\'{}\' {}'.format('Property ', full_key,
                                             format_description(key_status,
@@ -37,13 +40,13 @@ def get_new_prefix(prefix, key):
 
 def format_description(key_status, key_value):
     res = ''
-    if key_status == '_CHANGE_':
+    if key_status == parsers.STATUS_CHANGE:
         res = 'was updated. From {} to {}'.format(
-            format_value(key_value['_OLD_']),
-            format_value(key_value['_NEW_']))
-    elif key_status == '_DEL_':
+            format_value(key_value[parsers.STATUS_DEL]),
+            format_value(key_value[parsers.STATUS_NEW]))
+    elif key_status == parsers.STATUS_DEL:
         res = 'was removed'
-    elif key_status == '_NEW_':
+    elif key_status == parsers.STATUS_NEW:
         res = 'was added with value: {}'.format(format_value(key_value))
     return res
 

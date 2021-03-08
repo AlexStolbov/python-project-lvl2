@@ -1,6 +1,14 @@
 import json
 import yaml
 
+KEY_NAME = '_KEY_NAME_'
+KEY_STATUS = '_KEY_STATUS_'
+KEY_VALUE = '_KEY_VALUE_'
+KEY_CHILDREN = '_KEY_CHILDREN_'
+STATUS_NEW = '_NEW_'
+STATUS_DEL = '_DEL_'
+STATUS_STAY = '_STAY_'
+STATUS_CHANGE = '_CHANGE_'
 
 def parse_files(origin_file, modified_file):
     """
@@ -44,8 +52,8 @@ def parse_data(old_data, new_data):
     res = []
     old_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
-    res += add_new_or_del_keys(old_data, old_keys - new_keys, '_DEL_')
-    res += add_new_or_del_keys(new_data, new_keys - old_keys, '_NEW_')
+    res += add_new_or_del_keys(old_data, old_keys - new_keys, STATUS_DEL)
+    res += add_new_or_del_keys(new_data, new_keys - old_keys, STATUS_NEW)
     res += add_stay_keys(old_data, new_data, old_keys & new_keys)
     return res
 
@@ -81,22 +89,42 @@ def get_simple_key(old_data, new_data, key):
     new_value = new_data[key]
     if old_value == new_value:
         res = make_key_description(key=key,
-                                   key_status='_STAY_',
+                                   key_status=STATUS_STAY,
                                    key_value=old_value)
     else:
         res = make_key_description(key=key,
-                                   key_status='_CHANGE_',
-                                   key_value={'_OLD_': old_value,
-                                              '_NEW_': new_value})
+                                   key_status=STATUS_CHANGE,
+                                   key_value={STATUS_DEL: old_value,
+                                              STATUS_NEW: new_value})
     return res
 
 
 def make_key_description(key, key_status=None, key_value=None, children=None):
-    res = {'_KEY_': key}
+    res = {KEY_NAME: key}
     if key_status is not None:
-        res['_STATUS_'] = key_status
+        res[KEY_STATUS] = key_status
     if key_value is not None:
-        res['_VALUE_'] = key_value
+        res[KEY_VALUE] = key_value
     if children is not None:
-        res['_CHILDREN_'] = children
+        res[KEY_CHILDREN] = children
     return res
+
+
+def get_key(key_description):
+    return key_description[KEY_NAME]
+
+
+def get_status(key_description):
+    return key_description[KEY_STATUS]
+
+
+def get_value(key_description):
+    return key_description[KEY_VALUE]
+
+
+def get_children(key_description):
+    return key_description[KEY_CHILDREN]
+
+
+def have_children(key_description):
+    return KEY_CHILDREN in key_description

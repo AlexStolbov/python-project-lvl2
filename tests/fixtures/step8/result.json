@@ -1,96 +1,18 @@
-{
-  "common": {
-    "_CHILDREN_": {
-      "follow": {
-        "_STATUS_": "_NEW_",
-        "_VALUE_": false
-      },
-      "setting1": {
-        "_STATUS_": "_STAY_",
-        "_VALUE_": "Value 1"
-      },
-      "setting2": {
-        "_STATUS_": "_DEL_",
-        "_VALUE_": 200
-      },
-      "setting3": {
-        "_STATUS_": "_CHANGE_",
-        "_VALUE_": {
-          "_NEW_": null,
-          "_OLD_": true
-        }
-      },
-      "setting4": {
-        "_STATUS_": "_NEW_",
-        "_VALUE_": "blah blah"
-      },
-      "setting5": {
-        "_STATUS_": "_NEW_",
-        "_VALUE_": {
-          "key5": "value5"
-        }
-      },
-      "setting6": {
-        "_CHILDREN_": {
-          "doge": {
-            "_CHILDREN_": {
-              "wow": {
-                "_STATUS_": "_CHANGE_",
-                "_VALUE_": {
-                  "_NEW_": "so much",
-                  "_OLD_": ""
-                }
-              }
-            }
-          },
-          "key": {
-            "_STATUS_": "_STAY_",
-            "_VALUE_": "value"
-          },
-          "ops": {
-            "_STATUS_": "_NEW_",
-            "_VALUE_": "vops"
-          }
-        }
-      }
-    }
-  },
-  "group1": {
-    "_CHILDREN_": {
-      "baz": {
-        "_STATUS_": "_CHANGE_",
-        "_VALUE_": {
-          "_NEW_": "bars",
-          "_OLD_": "bas"
-        }
-      },
-      "foo": {
-        "_STATUS_": "_STAY_",
-        "_VALUE_": "bar"
-      },
-      "nest": {
-        "_STATUS_": "_CHANGE_",
-        "_VALUE_": {
-          "_NEW_": "str",
-          "_OLD_": {
-            "key": "value"
-          }
-        }
-      }
-    }
-  },
-  "group2": {
-    "_STATUS_": "_DEL_",
-    "_VALUE_": {
+[
+  {
+    "_KEY_NAME_": "group2",
+    "_KEY_STATUS_": "_DEL_",
+    "_KEY_VALUE_": {
       "abc": 12345,
       "deep": {
         "id": 45
       }
     }
   },
-  "group3": {
-    "_STATUS_": "_NEW_",
-    "_VALUE_": {
+  {
+    "_KEY_NAME_": "group3",
+    "_KEY_STATUS_": "_NEW_",
+    "_KEY_VALUE_": {
       "deep": {
         "id": {
           "number": 45
@@ -98,5 +20,101 @@
       },
       "fee": 100500
     }
+  },
+  {
+    "_KEY_CHILDREN_": [
+      {
+        "_KEY_NAME_": "setting2",
+        "_KEY_STATUS_": "_DEL_",
+        "_KEY_VALUE_": 200
+      },
+      {
+        "_KEY_NAME_": "setting4",
+        "_KEY_STATUS_": "_NEW_",
+        "_KEY_VALUE_": "blah blah"
+      },
+      {
+        "_KEY_NAME_": "setting5",
+        "_KEY_STATUS_": "_NEW_",
+        "_KEY_VALUE_": {
+          "key5": "value5"
+        }
+      },
+      {
+        "_KEY_NAME_": "follow",
+        "_KEY_STATUS_": "_NEW_",
+        "_KEY_VALUE_": false
+      },
+      {
+        "_KEY_NAME_": "setting1",
+        "_KEY_STATUS_": "_STAY_",
+        "_KEY_VALUE_": "Value 1"
+      },
+      {
+        "_KEY_NAME_": "setting3",
+        "_KEY_STATUS_": "_CHANGE_",
+        "_KEY_VALUE_": {
+          "_DEL_": true,
+          "_NEW_": null
+        }
+      },
+      {
+        "_KEY_CHILDREN_": [
+          {
+            "_KEY_NAME_": "ops",
+            "_KEY_STATUS_": "_NEW_",
+            "_KEY_VALUE_": "vops"
+          },
+          {
+            "_KEY_NAME_": "key",
+            "_KEY_STATUS_": "_STAY_",
+            "_KEY_VALUE_": "value"
+          },
+          {
+            "_KEY_CHILDREN_": [
+              {
+                "_KEY_NAME_": "wow",
+                "_KEY_STATUS_": "_CHANGE_",
+                "_KEY_VALUE_": {
+                  "_DEL_": "",
+                  "_NEW_": "so much"
+                }
+              }
+            ],
+            "_KEY_NAME_": "doge"
+          }
+        ],
+        "_KEY_NAME_": "setting6"
+      }
+    ],
+    "_KEY_NAME_": "common"
+  },
+  {
+    "_KEY_CHILDREN_": [
+      {
+        "_KEY_NAME_": "baz",
+        "_KEY_STATUS_": "_CHANGE_",
+        "_KEY_VALUE_": {
+          "_DEL_": "bas",
+          "_NEW_": "bars"
+        }
+      },
+      {
+        "_KEY_NAME_": "nest",
+        "_KEY_STATUS_": "_CHANGE_",
+        "_KEY_VALUE_": {
+          "_DEL_": {
+            "key": "value"
+          },
+          "_NEW_": "str"
+        }
+      },
+      {
+        "_KEY_NAME_": "foo",
+        "_KEY_STATUS_": "_STAY_",
+        "_KEY_VALUE_": "bar"
+      }
+    ],
+    "_KEY_NAME_": "group1"
   }
-}
+]

@@ -1,3 +1,7 @@
+from operator import itemgetter
+import gendiff.engine.parsers as parsers
+
+
 def get_stylish(diff):
     stylish_dict = diff_to_uniform_dict(diff)
     list_data = stylish_to_list(stylish_dict)
@@ -5,51 +9,58 @@ def get_stylish(diff):
     return res
 
 
-def diff_to_uniform_dict(data):
-    sorted_keys = sorted(list(data.keys()))
+def diff_to_uniform_dict(diff):
     res = {}
-    for key in sorted_keys:
-        key_description = data[key]
-        children = key_description.get('_CHILDREN_', None)
-        if children:
-            value = diff_to_uniform_dict(children)
-            res[key] = value
-        else:
-            key_status = key_description['_STATUS_']
-            value = key_description['_VALUE_']
-            if key_status == '_CHANGE_':
-                res[get_stylish_key('_DEL_', key)] = value['_OLD_']
-                res[get_stylish_key('_NEW_', key)] = value['_NEW_']
-            else:
-                res[get_stylish_key(key_status, key)] = value
+    for key_description in diff:
+        res.update(parse_key_description(key_description))
     return res
 
 
-def get_stylish_key(status, key):
-    sign = {'_DEL_': '-', '_NEW_': '+', '_STAY_': ' '}[status]
-    return '{} {}'.format(sign, key)
+def parse_key_description(key_description):
+    res = {}
+    key = parsers.get_key(key_description)
+    if parsers.have_children(key_description):
+        children = parsers.get_children(key_description)
+        value = diff_to_uniform_dict(children)
+        res[parsers.STATUS_STAY, key] = value
+    else:
+        key_status = parsers.get_status(key_description)
+        value = parsers.get_value(key_description)
+        if key_status == parsers.STATUS_CHANGE:
+            res[parsers.STATUS_DEL, key] = value[parsers.STATUS_DEL]
+            res[parsers.STATUS_NEW, key] = value[parsers.STATUS_NEW]
+        else:
+            res[key_status, key] = value
+    return res
 
 
 def stylish_to_list(data, level=2):
     res = []
     shift = ' ' * level
-    for key, value in data.items():
-        key = format_key(key)
+    sorted_keys = sorted(list(data.keys()), key=itemgetter(1))
+    for key in sorted_keys:
+        value = data[key]
+        formatted_key = format_key(key)
         if isinstance(value, dict):
-            res.append('{}{}: {}'.format(shift, key, '{'))
+            res.append('{}{}: {}'.format(shift, formatted_key, '{'))
             res = res + stylish_to_list(value, level + 4)
             res.append('{}  {}'.format(shift, '}'))
         else:
             formatted_value = format_value(value)
-            res.append('{}{}:{}'.format(shift, key, formatted_value))
+            res.append('{}{}:{}'.format(shift, formatted_key, formatted_value))
     return res
 
 
 def format_key(key):
-    shift = ''
-    if ' ' not in key:
-        shift = '  '
-    return '{}{}'.format(shift, key)
+    if isinstance(key, tuple):
+        sign = {parsers.STATUS_DEL: '-',
+                parsers.STATUS_NEW: '+',
+                parsers.STATUS_STAY: ' '}[key[0]]
+        key_single = key[1]
+    else:
+        sign = ' '
+        key_single = key
+    return '{} {}'.format(sign, key_single)
 
 
 def format_value(value):

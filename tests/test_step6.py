@@ -37,4 +37,3 @@ def test_gendiff_yaml():
 
 if __name__ == '__main__':
     test_gendiff_json()
-

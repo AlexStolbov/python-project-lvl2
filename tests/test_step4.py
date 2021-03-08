@@ -10,7 +10,6 @@ def test_gendiff():
     path_modified = path.join(current_dir, FIXTURES_DIR_4, 'lvl2_modified.json')
     path_should_be = path.join(current_dir, FIXTURES_DIR_4, 'should_be.txt')
     res = generate_diff(path_origin, path_modified)
-    print(res)
     should_be = open(path_should_be).read()
     assert res == should_be
 

@@ -17,6 +17,7 @@ def get_diff_from_json():
 def test_plain():
     current_dir = path.dirname(__file__)
     diff = get_diff_from_json()
+    print(diff)
     plain = get_plain(diff)
     print(plain)
     path_should_be = path.join(current_dir, FIXTURES_DIR_7, 'plain.txt')

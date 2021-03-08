@@ -8,15 +8,14 @@ def get_plain(diff):
 
 def diff_to_list(diff, prefix=''):
     res = []
-    for key_description in diff:
-        res += parse_key_description(key_description, prefix)
+    for key, key_description in diff.items():
+        res += parse_key_description(key, key_description, prefix)
     res.sort()
     return res
 
 
-def parse_key_description(key_description, prefix):
+def parse_key_description(key, key_description, prefix):
     res = []
-    key = parsers.get_key(key_description)
     if parsers.have_children(key_description):
         children = parsers.get_children(key_description)
         children_keys = diff_to_list(children, get_new_prefix(prefix, key))

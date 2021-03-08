@@ -10,6 +10,7 @@ STATUS_DEL = '_DEL_'
 STATUS_STAY = '_STAY_'
 STATUS_CHANGE = '_CHANGE_'
 
+
 def parse_files(origin_file, modified_file):
     """
     Runs load file and runs parser
@@ -49,38 +50,36 @@ def load_file(file_path):
 
 
 def parse_data(old_data, new_data):
-    res = []
+    res = {}
     old_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
-    res += add_new_or_del_keys(old_data, old_keys - new_keys, STATUS_DEL)
-    res += add_new_or_del_keys(new_data, new_keys - old_keys, STATUS_NEW)
-    res += add_stay_keys(old_data, new_data, old_keys & new_keys)
+    res.update(add_new_or_del_keys(old_data, old_keys - new_keys, STATUS_DEL))
+    res.update(add_new_or_del_keys(new_data, new_keys - old_keys, STATUS_NEW))
+    res.update(add_stay_keys(old_data, new_data, old_keys & new_keys))
     return res
 
 
 def add_new_or_del_keys(data, keys, key_status):
-    res = []
+    res = {}
     for key in keys:
-        res.append(make_key_description(key=key,
-                                        key_status=key_status,
-                                        key_value=data[key]))
+        res[key] = make_key_description(key_status=key_status,
+                                        key_value=data[key])
     return res
 
 
 def add_stay_keys(old_data, new_data, keys):
-    res = []
+    res = {}
     for key in keys:
         if isinstance(old_data[key], dict) and isinstance(new_data[key], dict):
-            res.append(get_node(old_data, new_data, key))
+            res[key] = get_node(old_data, new_data, key)
         else:
-            res.append(get_simple_key(old_data, new_data, key))
+            res[key] = get_simple_key(old_data, new_data, key)
     return res
 
 
 def get_node(old_data, new_data, key):
     children = parse_data(old_data[key], new_data[key])
-    res = make_key_description(key=key,
-                               children=children)
+    res = make_key_description(children=children)
     return res
 
 
@@ -88,19 +87,17 @@ def get_simple_key(old_data, new_data, key):
     old_value = old_data[key]
     new_value = new_data[key]
     if old_value == new_value:
-        res = make_key_description(key=key,
-                                   key_status=STATUS_STAY,
+        res = make_key_description(key_status=STATUS_STAY,
                                    key_value=old_value)
     else:
-        res = make_key_description(key=key,
-                                   key_status=STATUS_CHANGE,
+        res = make_key_description(key_status=STATUS_CHANGE,
                                    key_value={STATUS_DEL: old_value,
                                               STATUS_NEW: new_value})
     return res
 
 
-def make_key_description(key, key_status=None, key_value=None, children=None):
-    res = {KEY_NAME: key}
+def make_key_description(key_status=None, key_value=None, children=None):
+    res = {}
     if key_status is not None:
         res[KEY_STATUS] = key_status
     if key_value is not None:
@@ -108,10 +105,6 @@ def make_key_description(key, key_status=None, key_value=None, children=None):
     if children is not None:
         res[KEY_CHILDREN] = children
     return res
-
-
-def get_key(key_description):
-    return key_description[KEY_NAME]
 
 
 def get_status(key_description):

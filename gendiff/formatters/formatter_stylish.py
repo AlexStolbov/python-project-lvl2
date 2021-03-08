@@ -11,14 +11,13 @@ def get_stylish(diff):
 
 def diff_to_uniform_dict(diff):
     res = {}
-    for key_description in diff:
-        res.update(parse_key_description(key_description))
+    for key, key_description in diff.items():
+        res.update(parse_key_description(key, key_description))
     return res
 
 
-def parse_key_description(key_description):
+def parse_key_description(key, key_description):
     res = {}
-    key = parsers.get_key(key_description)
     if parsers.have_children(key_description):
         children = parsers.get_children(key_description)
         value = diff_to_uniform_dict(children)

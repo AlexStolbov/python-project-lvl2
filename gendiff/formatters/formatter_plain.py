@@ -53,10 +53,13 @@ def format_description(key_status, key_value):
 def format_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    elif value is True:
-        return 'true'
+    res = ''
+    if value is True:
+        res = 'true'
     elif value is False:
-        return 'false'
+        res = 'false'
     elif value is None:
-        return 'null'
-    return '\'{}\''.format(value)
+        res = 'null'
+    else:
+        res = '\'{}\''.format(value)
+    return res

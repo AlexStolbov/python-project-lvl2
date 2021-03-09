@@ -63,10 +63,6 @@ def format_key(key):
 
 
 def format_value(value):
-    # shift = ''
-    # if value != '':
-    #     shift = ' '
-
     shift = ' '
     if value is True:
         value = 'true'

@@ -1,5 +1,5 @@
 from operator import itemgetter
-import gendiff.engine.parsers as parsers
+import gendiff_proj.engine.parsers as parsers
 
 
 def get_stylish(diff):

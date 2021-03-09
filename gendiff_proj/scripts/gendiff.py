@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import argparse
-from gendiff.engine.compare_files import generate_diff
+from gendiff_proj.engine.compare_files import generate_diff
 
 
 def main():

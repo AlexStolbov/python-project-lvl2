@@ -1,6 +1,6 @@
 from os import path
 from tests.test_step7 import get_diff_from_json
-from gendiff.formatters.formatter_json import get_json
+from gendiff_proj.formatters.formatter_json import get_json
 
 FIXTURES_DIR_8 = 'fixtures/step8'
 

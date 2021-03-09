@@ -1,4 +1,4 @@
-from gendiff.scripts.gendiff_script import generate_diff
+from gendiff_proj.scripts.gendiff import generate_diff
 from os import path
 
 FIXTURES_DIR_4 = 'fixtures/step4'

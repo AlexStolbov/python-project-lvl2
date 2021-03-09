@@ -1,6 +1,6 @@
 from os import path
-from gendiff_proj.engine.parsers import parse_files
-from gendiff_proj.formatters.formatter_plain import get_plain
+from gendiff.engine.parsers import parse_files
+from gendiff.formatters.formatter_plain import get_plain
 from tests.test_step6 import FIXTURES_DIR_6
 
 FIXTURES_DIR_7 = 'fixtures/step7'

@@ -51,11 +51,11 @@ def load_file(file_path):
 
 def parse_data(old_data, new_data):
     res = {}
-    old_keys = set(old_data.keys())
+    del_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
-    res.update(add_new_or_del_keys(old_data, old_keys - new_keys, STATUS_DEL))
-    res.update(add_new_or_del_keys(new_data, new_keys - old_keys, STATUS_NEW))
-    res.update(add_stay_keys(old_data, new_data, old_keys & new_keys))
+    res.update(add_new_or_del_keys(old_data, del_keys - new_keys, STATUS_DEL))
+    res.update(add_new_or_del_keys(new_data, new_keys - del_keys, STATUS_NEW))
+    res.update(add_stay_keys(old_data, new_data, del_keys & new_keys))
     return res
 
 

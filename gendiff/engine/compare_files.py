@@ -6,10 +6,11 @@ from gendiff.formatters.formatter_json import get_json
 
 def generate_diff(file_original, file_modified, out_format='stylish'):
     diff = parse_files(file_original, file_modified)
+    res = '{} is {}'.format(out_format, 'unknown format')
     if out_format == 'stylish':
-        return get_stylish(diff)
+        res = get_stylish(diff)
     if out_format == 'plain':
-        return get_plain(diff)
+        res = get_plain(diff)
     if out_format == 'json':
-        return get_json(diff)
-    return '{} is {}'.format(out_format, 'unknown format')
+        res = get_json(diff)
+    return res

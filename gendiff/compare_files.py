@@ -1,4 +1,4 @@
-from gendiff.engine.parsers import parse_files
+from gendiff.parsers import parse_files
 from gendiff.formatters.formatter_stylish import get_stylish
 from gendiff.formatters.formatter_plain import get_plain
 from gendiff.formatters.formatter_json import get_json

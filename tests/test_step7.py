@@ -1,5 +1,5 @@
 from os import path
-from gendiff.engine.parsers import parse_files
+from gendiff.parsers import parse_files
 from gendiff.formatters.formatter_plain import get_plain
 from tests.test_step6 import FIXTURES_DIR_6
 

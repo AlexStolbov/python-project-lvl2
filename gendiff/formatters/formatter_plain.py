@@ -1,4 +1,4 @@
-import gendiff.engine.parsers as parsers
+import gendiff.parsers as parsers
 
 
 def get_plain(diff):

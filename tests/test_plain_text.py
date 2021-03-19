@@ -2,18 +2,19 @@ from os import path
 from gendiff import generate_diff
 from tests.test_step6 import FIXTURES_DIR_6
 
-FIXTURES_DIR_8 = 'fixtures/step8'
+FIXTURES_DIR_7 = 'fixtures/step7'
 
 
-def test_json():
+def test_plain():
     current_dir = path.dirname(__file__)
     file_old = path.join(current_dir, FIXTURES_DIR_6, 'file1.json')
     file_new = path.join(current_dir, FIXTURES_DIR_6, 'file2.json')
-    res_json = generate_diff(file_old, file_new, out_format='json')
-    path_should_be = path.join(current_dir, FIXTURES_DIR_8, 'result.json')
+    plain = generate_diff(file_old, file_new, out_format='plain')
+    print(plain)
+    path_should_be = path.join(current_dir, FIXTURES_DIR_7, 'plain.txt')
     should_be = open(path_should_be).read()
-    assert res_json == should_be
+    assert plain == should_be
 
 
 if __name__ == '__main__':
-    test_json()
+    test_plain()

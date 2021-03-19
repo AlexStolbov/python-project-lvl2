@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import argparse
-from gendiff.compare_files import generate_diff
+from gendiff.generate_diff import generate_diff
 
 
 def main(args):

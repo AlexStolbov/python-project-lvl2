@@ -1,5 +1,6 @@
-import json
-import yaml
+from gendiff.open_source import open_source
+from gendiff.parse_source import parse
+from gendiff.formatters.make_format import make_format
 
 KEY_NAME = '_KEY_NAME_'
 KEY_STATUS = '_KEY_STATUS_'
@@ -11,45 +12,27 @@ STATUS_STAY = '_STAY_'
 STATUS_CHANGE = '_CHANGE_'
 
 
-def parse_files(origin_file, modified_file):
-    """
-    Runs load file and runs parser
-    Return parser's result
-    """
-    origin_data = load_file(origin_file)
-    modified_data = load_file(modified_file)
-    parse_result = []
-    if origin_data is not None and modified_data is not None:
-        parse_result = parse_data(origin_data, modified_data)
-    return parse_result
+def generate_diff(file_old, file_new, out_format='stylish'):
+
+    data_source_old, format_old = open_source(file_old)
+    data_source_new, format_new = open_source(file_new)
+
+    data_old = parse(data_source_old, format_old)
+    data_new = parse(data_source_new, format_new)
+
+    inner_diff = build_inner_diff(data_old, data_new)
+    diff = make_format(inner_diff, out_format)
+    return diff
 
 
-def load_file(file_path):
-    """
-    Load json or yaml file
-    """
-
-    def is_json(file_name):
-        """
-        Simple check
-        """
-        return '.json' in file_name
-
-    def is_yaml(file_name):
-        """
-        Simple check
-        """
-        return '.yml' in file_name
-
-    if is_json(file_path):
-        return json.load(open(file_path))
-    elif is_yaml(file_path):
-        return yaml.safe_load(open(file_path))
-    else:
-        return None
+def build_inner_diff(data_old, data_new):
+    inner_diff = []
+    if data_old is not None and data_new is not None:
+        inner_diff = compare_data(data_old, data_new)
+    return inner_diff
 
 
-def parse_data(old_data, new_data):
+def compare_data(old_data, new_data):
     res = {}
     del_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
@@ -78,7 +61,7 @@ def add_stay_keys(old_data, new_data, keys):
 
 
 def get_node(old_data, new_data, key):
-    children = parse_data(old_data[key], new_data[key])
+    children = compare_data(old_data[key], new_data[key])
     res = make_key_description(children=children)
     return res
 

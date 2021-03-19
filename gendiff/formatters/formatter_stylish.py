@@ -1,5 +1,5 @@
 from operator import itemgetter
-import gendiff.parsers as parsers
+import gendiff.generate_diff as generate_diff
 
 
 def get_stylish(diff):
@@ -18,16 +18,16 @@ def diff_to_uniform_dict(diff):
 
 def parse_key_description(key, key_description):
     res = {}
-    if parsers.have_children(key_description):
-        children = parsers.get_children(key_description)
+    if generate_diff.have_children(key_description):
+        children = generate_diff.get_children(key_description)
         value = diff_to_uniform_dict(children)
-        res[parsers.STATUS_STAY, key] = value
+        res[generate_diff.STATUS_STAY, key] = value
     else:
-        key_status = parsers.get_status(key_description)
-        value = parsers.get_value(key_description)
-        if key_status == parsers.STATUS_CHANGE:
-            res[parsers.STATUS_DEL, key] = value[parsers.STATUS_DEL]
-            res[parsers.STATUS_NEW, key] = value[parsers.STATUS_NEW]
+        key_status = generate_diff.get_status(key_description)
+        value = generate_diff.get_value(key_description)
+        if key_status == generate_diff.STATUS_CHANGE:
+            res[generate_diff.STATUS_DEL, key] = value[generate_diff.STATUS_DEL]
+            res[generate_diff.STATUS_NEW, key] = value[generate_diff.STATUS_NEW]
         else:
             res[key_status, key] = value
     return res
@@ -52,9 +52,9 @@ def stylish_to_list(data, level=2):
 
 def format_key(key):
     if isinstance(key, tuple):
-        sign = {parsers.STATUS_DEL: '-',
-                parsers.STATUS_NEW: '+',
-                parsers.STATUS_STAY: ' '}[key[0]]
+        sign = {generate_diff.STATUS_DEL: '-',
+                generate_diff.STATUS_NEW: '+',
+                generate_diff.STATUS_STAY: ' '}[key[0]]
         key_single = key[1]
     else:
         sign = ' '

@@ -55,7 +55,7 @@ def format_value(value):
         res = '[complex value]'
     elif isinstance(value, str):
         res = '\'{}\''.format(value)
-    elif value in (True, False, None):
+    elif value is True or value is False or value is None:
         res = {True: 'true', False: 'false', None: 'null'}[value]
     else:
         res = value

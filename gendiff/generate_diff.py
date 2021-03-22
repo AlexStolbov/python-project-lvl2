@@ -31,20 +31,16 @@ def compare_data(old_data, new_data):
     res = {}
     old_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
-    all_keys = old_keys | new_keys
-    for key in all_keys:
-        if key not in old_keys:
-            res[key] = make_key_description(key_status=STATUS_NEW,
-                                            key_value=new_data[key])
-        elif key not in new_keys:
-            res[key] = make_key_description(key_status=STATUS_DEL,
-                                            key_value=old_data[key])
+    for key in new_keys - old_keys:
+        res[key] = make_key_description(STATUS_NEW, new_data[key])
+    for key in old_keys - new_keys:
+        res[key] = make_key_description(STATUS_DEL, old_data[key])
+    for key in old_keys & new_keys:
+        if isinstance(old_data[key], dict) and isinstance(new_data[key],
+                                                          dict):
+            res[key] = get_node(old_data, new_data, key)
         else:
-            if isinstance(old_data[key], dict) and isinstance(new_data[key],
-                                                              dict):
-                res[key] = get_node(old_data, new_data, key)
-            else:
-                res[key] = get_simple_key(old_data, new_data, key)
+            res[key] = get_simple_key(old_data[key], new_data[key])
     return res
 
 
@@ -54,9 +50,7 @@ def get_node(old_data, new_data, key):
     return res
 
 
-def get_simple_key(old_data, new_data, key):
-    old_value = old_data[key]
-    new_value = new_data[key]
+def get_simple_key(old_value, new_value):
     if old_value == new_value:
         res = make_key_description(key_status=STATUS_STAY,
                                    key_value=old_value)
@@ -76,18 +70,6 @@ def make_key_description(key_status=None, key_value=None, children=None):
     if children is not None:
         res[KEY_CHILDREN] = children
     return res
-
-
-def get_status(key_description):
-    return key_description[KEY_STATUS]
-
-
-def get_value(key_description):
-    return key_description[KEY_VALUE]
-
-
-def get_children(key_description):
-    return key_description[KEY_CHILDREN]
 
 
 def have_children(key_description):

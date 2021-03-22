@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 import sys
-from gendiff import main as gendiff_main
+from gendiff.cli import parse_args
+from gendiff.generate_diff import generate_diff
 
 
 def main():
-    gendiff_main(sys.argv[1:])
+    parsed_args = parse_args(sys.argv[1:])
+    res = generate_diff(parsed_args.first_file,
+                        parsed_args.second_file,
+                        parsed_args.format)
+    print(res)

@@ -13,50 +13,38 @@ STATUS_CHANGE = '_CHANGE_'
 
 
 def generate_diff(file_old, file_new, out_format='stylish'):
-
     data_source_old, format_old = open_source(file_old)
     data_source_new, format_new = open_source(file_new)
 
     data_old = parse(data_source_old, format_old)
     data_new = parse(data_source_new, format_new)
 
-    inner_diff = build_inner_diff(data_old, data_new)
-    diff = make_format(inner_diff, out_format)
-    return diff
-
-
-def build_inner_diff(data_old, data_new):
-    inner_diff = []
+    diff = []
     if data_old is not None and data_new is not None:
         inner_diff = compare_data(data_old, data_new)
-    return inner_diff
+        diff = make_format(inner_diff, out_format)
+
+    return diff
 
 
 def compare_data(old_data, new_data):
     res = {}
-    del_keys = set(old_data.keys())
+    old_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
-    res.update(add_new_or_del_keys(old_data, del_keys - new_keys, STATUS_DEL))
-    res.update(add_new_or_del_keys(new_data, new_keys - del_keys, STATUS_NEW))
-    res.update(add_stay_keys(old_data, new_data, del_keys & new_keys))
-    return res
-
-
-def add_new_or_del_keys(data, keys, key_status):
-    res = {}
-    for key in keys:
-        res[key] = make_key_description(key_status=key_status,
-                                        key_value=data[key])
-    return res
-
-
-def add_stay_keys(old_data, new_data, keys):
-    res = {}
-    for key in keys:
-        if isinstance(old_data[key], dict) and isinstance(new_data[key], dict):
-            res[key] = get_node(old_data, new_data, key)
+    all_keys = old_keys | new_keys
+    for key in all_keys:
+        if key not in old_keys:
+            res[key] = make_key_description(key_status=STATUS_NEW,
+                                            key_value=new_data[key])
+        elif key not in new_keys:
+            res[key] = make_key_description(key_status=STATUS_DEL,
+                                            key_value=old_data[key])
         else:
-            res[key] = get_simple_key(old_data, new_data, key)
+            if isinstance(old_data[key], dict) and isinstance(new_data[key],
+                                                              dict):
+                res[key] = get_node(old_data, new_data, key)
+            else:
+                res[key] = get_simple_key(old_data, new_data, key)
     return res
 
 

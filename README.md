@@ -1,7 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/AlexStolbov/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/AlexStolbov/python-project-lvl2/actions)
 ### Python CI
-![Python CI](https://github.com/AlexStolbov/python-project-lvl2/workflows/Python%20CI/badge.svg)
+[![Python CI](https://github.com/AlexStolbov/python-project-lvl2/workflows/Python%20CI/badge.svg)](https://github.com/AlexStolbov/python-project-lvl2/actions/workflows/lint-check.yml)
 ### Codeclimate Maintainability Badge
 [![Maintainability](https://api.codeclimate.com/v1/badges/c5e6a206e48eb7f81acb/maintainability)](https://codeclimate.com/github/AlexStolbov/python-project-lvl2/maintainability)
 ### Codeclimate Test Coverage

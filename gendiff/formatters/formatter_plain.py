@@ -1,4 +1,4 @@
-import gendiff.generate_diff as generate_diff
+import gendiff.gendiff as generate_diff
 
 
 def get_plain(diff):

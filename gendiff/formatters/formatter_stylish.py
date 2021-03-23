@@ -1,5 +1,5 @@
 from operator import itemgetter
-import gendiff.generate_diff as generate_diff
+import gendiff.gendiff as generate_diff
 
 
 def get_stylish(diff):

@@ -1,5 +1,5 @@
 from os import path
-from gendiff.generate_diff import generate_diff
+from gendiff.gendiff import generate_diff
 from gendiff.cli import parse_args
 
 FIXTURES_DIR_6 = 'fixtures/step6'

@@ -1,4 +1,4 @@
-from gendiff.generate_diff import generate_diff
+from gendiff.gendiff import generate_diff
 from os import path
 
 FIXTURES_DIR_4 = 'fixtures/plain_json'

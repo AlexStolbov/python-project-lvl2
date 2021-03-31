@@ -1,5 +1,4 @@
 from os import path
-import logging
 from gendiff.cli import parse_args
 from gendiff.gendiff import generate_diff
 

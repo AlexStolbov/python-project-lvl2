@@ -39,7 +39,7 @@ run7plain:
 	poetry run gendiff --format plain tests/fixtures/step6/file1.json tests/fixtures/step6/file2.json
 
 runtests:
-	poetry run pytest
+	poetry run pytest -v
 
 test-coverage:
 	poetry run pytest --cov=gendiff --cov-report xml tests

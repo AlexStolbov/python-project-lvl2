@@ -1,4 +1,5 @@
 from os import path
+import logging
 from gendiff.cli import parse_args
 from gendiff.gendiff import generate_diff
 
@@ -37,6 +38,9 @@ def test_nested_json():
     path_modified = path_current(NESTED_JSON_DIR, 'nested_modified.json')
     path_diff = path_current(FIXTURES_DIR, 'stylish_nested_diff.txt')
     res = generate_diff(path_origin, path_modified)
+    # logging.info(
+    #     'diff: \n{}'.format(pprint.pformat(inner_diff, indent=2, width=60)))
+
     diff = open(path_diff).read()
     assert res == diff
 
@@ -80,4 +84,4 @@ def test_json_diff():
 
 
 if __name__ == '__main__':
-    test_nested_yaml()
+    test_nested_json()

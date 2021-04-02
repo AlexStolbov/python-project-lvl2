@@ -83,4 +83,4 @@ def test_json_diff():
 
 
 if __name__ == '__main__':
-    test_nested_json()
+    test_plain()

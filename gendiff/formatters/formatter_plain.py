@@ -1,9 +1,12 @@
+import logging
 import gendiff.gendiff as generate_diff
 
 
 def get_plain(diff):
     plain_dict = diff_to_list(diff)
-    return '\n'.join(plain_dict)
+    res = '\n'.join(plain_dict)
+    logging.info('plain diff: \n{}'.format(res))
+    return res
 
 
 def diff_to_list(diff, prefix=''):
@@ -16,6 +19,11 @@ def diff_to_list(diff, prefix=''):
 
 def parse_key_description(key, key_description, prefix):
     res = []
+    descr_template = {
+        generate_diff.STATUS_CHANGE: 'was updated. From {old} to {new}',
+        generate_diff.STATUS_DEL: 'was removed',
+        generate_diff.STATUS_NEW: 'was added with value: {new}'}
+
     if generate_diff.KEY_CHILDREN in key_description:
         children = key_description[generate_diff.KEY_CHILDREN]
         children_keys = diff_to_list(children, get_new_prefix(prefix, key))
@@ -25,6 +33,10 @@ def parse_key_description(key, key_description, prefix):
         if key_status != generate_diff.STATUS_STAY:
             value = key_description[generate_diff.KEY_VALUE]
             full_key = get_new_prefix(prefix, key)
+            descr = descr_template[key_status].format(
+                {'old': value,
+                 'new': value}
+            )
             res.append('{}\'{}\' {}'.format('Property ', full_key,
                                             format_description(key_status,
                                                                value)))
@@ -47,6 +59,7 @@ def format_description(key_status, key_value):
         res = 'was removed'
     elif key_status == generate_diff.STATUS_NEW:
         res = 'was added with value: {}'.format(format_value(key_value))
+
     return res
 
 

@@ -5,7 +5,6 @@ venv
 .idea
 *.egg-info
 __pycache__
-dist/
 *.pyc
 
 # Byte-compiled / optimized / DLL files

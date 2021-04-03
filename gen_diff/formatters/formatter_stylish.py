@@ -1,11 +1,14 @@
 from operator import itemgetter
-import gendiff.gendiff as generate_diff
+from gen_diff.logout import log_info
+import gen_diff.make_inner_diff as make_inner_diff
 
 
 def get_stylish(diff):
     stylish_dict = diff_to_uniform_dict(diff)
+    log_info('stylish_uniform', stylish_dict)
     list_data = stylish_to_list(stylish_dict)
     res = '{}\n{}\n{}'.format('{', '\n'.join(list_data), '}')
+    log_info('stylish_json', res)
     return res
 
 
@@ -18,18 +21,14 @@ def diff_to_uniform_dict(diff):
 
 def parse_key_description(key, key_description):
     res = {}
-    if generate_diff.KEY_CHILDREN in key_description:
-        children = key_description[generate_diff.KEY_CHILDREN]
+    if make_inner_diff.KEY_CHILDREN in key_description:
+        children = key_description[make_inner_diff.KEY_CHILDREN]
         value = diff_to_uniform_dict(children)
-        res[generate_diff.STATUS_STAY, key] = value
+        res[make_inner_diff.VALUE_STAY, key] = value
     else:
-        key_status = key_description[generate_diff.KEY_STATUS]
-        value = key_description[generate_diff.KEY_VALUE]
-        if key_status == generate_diff.STATUS_CHANGE:
-            res[generate_diff.STATUS_DEL, key] = value[generate_diff.STATUS_DEL]
-            res[generate_diff.STATUS_NEW, key] = value[generate_diff.STATUS_NEW]
-        else:
-            res[key_status, key] = value
+        values = key_description[make_inner_diff.KEY_VALUE]
+        for value_status, value in values.items():
+            res[value_status, key] = value
     return res
 
 
@@ -45,16 +44,17 @@ def stylish_to_list(data, level=2):
             res = res + stylish_to_list(value, level + 4)
             res.append('{}  {}'.format(shift, '}'))
         else:
-            formatted_value = format_value(value)
+            formatted_value = to_string(value)
             res.append('{}{}:{}'.format(shift, formatted_key, formatted_value))
     return res
 
 
 def format_key(key):
     if isinstance(key, tuple):
-        sign = {generate_diff.STATUS_DEL: '-',
-                generate_diff.STATUS_NEW: '+',
-                generate_diff.STATUS_STAY: ' '}[key[0]]
+        sign = {make_inner_diff.VALUE_DEL: '-',
+                make_inner_diff.VALUE_NEW: '+',
+                make_inner_diff.VALUE_STAY: ' '}[key[0]]
+
         key_single = key[1]
     else:
         sign = ' '
@@ -62,7 +62,7 @@ def format_key(key):
     return '{} {}'.format(sign, key_single)
 
 
-def format_value(value):
+def to_string(value):
     shift = ' '
     if value is True:
         value = 'true'

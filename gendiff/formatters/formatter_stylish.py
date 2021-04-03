@@ -1,6 +1,6 @@
 from operator import itemgetter
-from gen_diff.logout import log_info
-import gen_diff.make_inner_diff as make_inner_diff
+from gendiff.logout import log_info
+import gendiff.make_inner_diff as make_inner_diff
 
 
 def get_stylish(diff):

@@ -1,5 +1,5 @@
 import json
-from gen_diff.logout import log_info
+from gendiff.logout import log_info
 
 
 def get_json(diff):

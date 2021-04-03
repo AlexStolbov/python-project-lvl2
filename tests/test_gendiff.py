@@ -1,6 +1,6 @@
 from os import path
-from gen_diff.cli import parse_args
-from gen_diff.gendiff import generate_diff
+from gendiff.cli import parse_args
+from gendiff.gen_diff import generate_diff
 
 CURRENT_DIR = path.dirname(__file__)
 FIXTURES_DIR = 'fixtures'

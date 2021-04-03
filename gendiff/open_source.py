@@ -1,4 +1,4 @@
-from gen_diff.parse_source import JSON_FORMAT, YAML_FORMAT
+from gendiff.parse_source import JSON_FORMAT, YAML_FORMAT
 
 
 def open_source(file_path):

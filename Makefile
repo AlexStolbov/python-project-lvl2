@@ -14,7 +14,7 @@ package-install:
 	python3 -m pip install --force --user dist/*.whl
 
 lint:
-	poetry run flake8 gen_diff
+	poetry run flake8 gendiff
 	poetry run flake8 tests
 
 run4:
@@ -42,4 +42,4 @@ runtests:
 	poetry run pytest -v
 
 test-coverage:
-	poetry run pytest --cov=gen_diff --cov-report xml tests
+	poetry run pytest --cov=gendiff --cov-report xml tests

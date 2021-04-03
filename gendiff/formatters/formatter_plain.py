@@ -1,5 +1,5 @@
-from gen_diff.logout import log_info
-import gen_diff.make_inner_diff as make_inner_diff
+from gendiff.logout import log_info
+import gendiff.make_inner_diff as make_inner_diff
 
 DESCR_TEMPLATE = {
     make_inner_diff.STATUS_CHANGE: 'was updated. From {_DEL_} to {_NEW_}',

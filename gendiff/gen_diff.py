@@ -1,9 +1,9 @@
 import logging
-from gen_diff.logout import log_info
-from gen_diff.open_source import open_source
-from gen_diff.parse_source import parse
-from gen_diff.make_inner_diff import compare_data
-from gen_diff.formatters.make_format import make_format
+from gendiff.logout import log_info
+from gendiff.open_source import open_source
+from gendiff.parse_source import parse
+from gendiff.make_inner_diff import compare_data
+from gendiff.formatters.make_format import make_format
 
 
 def generate_diff(file_old, file_new, out_format='stylish'):
@@ -24,7 +24,7 @@ def source_to_data(source):
     return data
 
 
-logging.basicConfig(filename='../logs/gendiff.log',
+logging.basicConfig(filename='gendiff.log',
                     level=logging.INFO,
                     filemode='w',
                     format='%(levelname)s:%(message)s')

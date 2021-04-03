@@ -1,3 +1,4 @@
+import logging
 from gen_diff.logout import log_info
 from gen_diff.open_source import open_source
 from gen_diff.parse_source import parse
@@ -23,4 +24,7 @@ def source_to_data(source):
     return data
 
 
-
+logging.basicConfig(filename='../logs/gendiff.log',
+                    level=logging.INFO,
+                    filemode='w',
+                    format='%(levelname)s:%(message)s')

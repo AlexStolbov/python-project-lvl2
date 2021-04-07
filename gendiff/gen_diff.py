@@ -2,7 +2,7 @@ import logging
 from gendiff.logout import log_info
 from gendiff.open_source import open_source
 from gendiff.parse_source import parse
-from gendiff.make_inner_diff import compare_data
+from gendiff.make_inner_diff import make_inner_diff
 from gendiff.formatters.make_format import make_format
 
 
@@ -12,7 +12,7 @@ def generate_diff(file_old, file_new, out_format='stylish'):
 
     diff = []
     if data_old is not None and data_new is not None:
-        inner_diff = compare_data(data_old, data_new)
+        inner_diff = make_inner_diff(data_old, data_new)
         log_info('inner_diff', inner_diff)
         diff = make_format(inner_diff, out_format)
     return diff

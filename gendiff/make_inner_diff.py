@@ -11,7 +11,7 @@ VALUE_DEL = '_DEL_'
 VALUE_NEW = '_NEW_'
 
 
-def compare_data(old_data, new_data, root_key=''):
+def make_inner_diff(old_data, new_data, root_key=''):
     children = []
     old_keys = set(old_data.keys())
     new_keys = set(new_data.keys())
@@ -26,7 +26,7 @@ def compare_data(old_data, new_data, root_key=''):
     for key in old_keys & new_keys:
         if isinstance(old_data[key], dict) and isinstance(new_data[key],
                                                           dict):
-            children.append(compare_data(old_data[key], new_data[key], key))
+            children.append(make_inner_diff(old_data[key], new_data[key], key))
 
         else:
             children.append(get_simple_key(key, old_data[key], new_data[key]))

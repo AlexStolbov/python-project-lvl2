@@ -1,122 +1,143 @@
 {
-  "common": {
-    "_CHILDREN_": {
-      "follow": {
-        "_STATUS_": "_NEW_",
-        "_VALUE_": {
-          "_NEW_": false
-        }
-      },
-      "setting1": {
-        "_STATUS_": "_STAY_",
-        "_VALUE_": {
-          "_STAY_": "Value 1"
-        }
-      },
-      "setting2": {
-        "_STATUS_": "_DEL_",
-        "_VALUE_": {
-          "_DEL_": 200
-        }
-      },
-      "setting3": {
-        "_STATUS_": "_CHANGE_",
-        "_VALUE_": {
-          "_DEL_": true,
-          "_NEW_": null
-        }
-      },
-      "setting4": {
-        "_STATUS_": "_NEW_",
-        "_VALUE_": {
-          "_NEW_": "blah blah"
-        }
-      },
-      "setting5": {
-        "_STATUS_": "_NEW_",
-        "_VALUE_": {
-          "_NEW_": {
-            "key5": "value5"
-          }
-        }
-      },
-      "setting6": {
-        "_CHILDREN_": {
-          "doge": {
-            "_CHILDREN_": {
-              "wow": {
-                "_STATUS_": "_CHANGE_",
-                "_VALUE_": {
-                  "_DEL_": "",
-                  "_NEW_": "so much"
-                }
-              }
-            }
-          },
-          "key": {
-            "_STATUS_": "_STAY_",
-            "_VALUE_": {
-              "_STAY_": "value"
-            }
-          },
-          "ops": {
-            "_STATUS_": "_NEW_",
-            "_VALUE_": {
-              "_NEW_": "vops"
-            }
-          }
-        }
-      }
-    }
-  },
-  "group1": {
-    "_CHILDREN_": {
-      "baz": {
-        "_STATUS_": "_CHANGE_",
-        "_VALUE_": {
-          "_DEL_": "bas",
-          "_NEW_": "bars"
-        }
-      },
-      "foo": {
-        "_STATUS_": "_STAY_",
-        "_VALUE_": {
-          "_STAY_": "bar"
-        }
-      },
-      "nest": {
-        "_STATUS_": "_CHANGE_",
-        "_VALUE_": {
-          "_DEL_": {
-            "key": "value"
-          },
-          "_NEW_": "str"
-        }
-      }
-    }
-  },
-  "group2": {
-    "_STATUS_": "_DEL_",
-    "_VALUE_": {
-      "_DEL_": {
-        "abc": 12345,
-        "deep": {
-          "id": 45
-        }
-      }
-    }
-  },
-  "group3": {
-    "_STATUS_": "_NEW_",
-    "_VALUE_": {
-      "_NEW_": {
-        "deep": {
-          "id": {
-            "number": 45
+  "_CHILDREN_": [
+    {
+      "_CHILDREN_": [
+        {
+          "_KEY_": "follow",
+          "_STATUS_": "_NEW_",
+          "_VALUE_": {
+            "_NEW_": false
           }
         },
-        "fee": 100500
+        {
+          "_KEY_": "setting1",
+          "_STATUS_": "_STAY_",
+          "_VALUE_": {
+            "_STAY_": "Value 1"
+          }
+        },
+        {
+          "_KEY_": "setting2",
+          "_STATUS_": "_DEL_",
+          "_VALUE_": {
+            "_DEL_": 200
+          }
+        },
+        {
+          "_KEY_": "setting3",
+          "_STATUS_": "_CHANGE_",
+          "_VALUE_": {
+            "_DEL_": true,
+            "_NEW_": null
+          }
+        },
+        {
+          "_KEY_": "setting4",
+          "_STATUS_": "_NEW_",
+          "_VALUE_": {
+            "_NEW_": "blah blah"
+          }
+        },
+        {
+          "_KEY_": "setting5",
+          "_STATUS_": "_NEW_",
+          "_VALUE_": {
+            "_NEW_": {
+              "key5": "value5"
+            }
+          }
+        },
+        {
+          "_CHILDREN_": [
+            {
+              "_CHILDREN_": [
+                {
+                  "_KEY_": "wow",
+                  "_STATUS_": "_CHANGE_",
+                  "_VALUE_": {
+                    "_DEL_": "",
+                    "_NEW_": "so much"
+                  }
+                }
+              ],
+              "_KEY_": "doge"
+            },
+            {
+              "_KEY_": "key",
+              "_STATUS_": "_STAY_",
+              "_VALUE_": {
+                "_STAY_": "value"
+              }
+            },
+            {
+              "_KEY_": "ops",
+              "_STATUS_": "_NEW_",
+              "_VALUE_": {
+                "_NEW_": "vops"
+              }
+            }
+          ],
+          "_KEY_": "setting6"
+        }
+      ],
+      "_KEY_": "common"
+    },
+    {
+      "_CHILDREN_": [
+        {
+          "_KEY_": "baz",
+          "_STATUS_": "_CHANGE_",
+          "_VALUE_": {
+            "_DEL_": "bas",
+            "_NEW_": "bars"
+          }
+        },
+        {
+          "_KEY_": "foo",
+          "_STATUS_": "_STAY_",
+          "_VALUE_": {
+            "_STAY_": "bar"
+          }
+        },
+        {
+          "_KEY_": "nest",
+          "_STATUS_": "_CHANGE_",
+          "_VALUE_": {
+            "_DEL_": {
+              "key": "value"
+            },
+            "_NEW_": "str"
+          }
+        }
+      ],
+      "_KEY_": "group1"
+    },
+    {
+      "_KEY_": "group2",
+      "_STATUS_": "_DEL_",
+      "_VALUE_": {
+        "_DEL_": {
+          "abc": 12345,
+          "deep": {
+            "id": 45
+          }
+        }
+      }
+    },
+    {
+      "_KEY_": "group3",
+      "_STATUS_": "_NEW_",
+      "_VALUE_": {
+        "_NEW_": {
+          "deep": {
+            "id": {
+              "number": 45
+            }
+          },
+          "fee": 100500
+        }
       }
     }
-  }
+  ],
+  "_KEY_": ""
 }

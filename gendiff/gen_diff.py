@@ -27,4 +27,4 @@ def source_to_data(source):
 logging.basicConfig(filename='gendiff.log',
                     level=logging.INFO,
                     filemode='w',
-                    format='%(levelname)s:%(message)s')
+                    format='%(levelname)s | %(asctime)s | %(message)s')

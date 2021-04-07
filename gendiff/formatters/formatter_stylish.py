@@ -1,6 +1,6 @@
 from operator import itemgetter
 from gendiff.logout import log_info
-import gendiff.make_inner_diff as make_inner_diff
+import gendiff.make_inner_diff as inner_diff
 
 
 def get_stylish(diff):
@@ -14,21 +14,19 @@ def get_stylish(diff):
 
 def diff_to_uniform_dict(diff):
     res = {}
-    for key, key_description in diff.items():
-        res.update(parse_key_description(key, key_description))
-    return res
+    current_key = diff[inner_diff.KEY_KEY]
 
+    if inner_diff.KEY_CHILDREN not in diff:
+        for status, value in diff[inner_diff.KEY_VALUE].items():
+            res[status, current_key] = value
+        return res
 
-def parse_key_description(key, key_description):
-    res = {}
-    if make_inner_diff.KEY_CHILDREN in key_description:
-        children = key_description[make_inner_diff.KEY_CHILDREN]
-        value = diff_to_uniform_dict(children)
-        res[make_inner_diff.VALUE_STAY, key] = value
-    else:
-        values = key_description[make_inner_diff.KEY_VALUE]
-        for value_status, value in values.items():
-            res[value_status, key] = value
+    for child in diff[inner_diff.KEY_CHILDREN]:
+        res.update(diff_to_uniform_dict(child))
+
+    if current_key:
+        res = {(inner_diff.VALUE_STAY, current_key): res}
+
     return res
 
 
@@ -51,9 +49,9 @@ def stylish_to_list(data, level=2):
 
 def format_key(key):
     if isinstance(key, tuple):
-        sign = {make_inner_diff.VALUE_DEL: '-',
-                make_inner_diff.VALUE_NEW: '+',
-                make_inner_diff.VALUE_STAY: ' '}[key[0]]
+        sign = {inner_diff.VALUE_DEL: '-',
+                inner_diff.VALUE_NEW: '+',
+                inner_diff.VALUE_STAY: ' '}[key[0]]
 
         key_single = key[1]
     else:

@@ -1,62 +1,40 @@
 from os import path
+import pytest
 from gendiff.cli import parse_args
 from gendiff.gen_diff import generate_diff
 
 CURRENT_DIR = path.dirname(__file__)
-FIXTURES_DIR = 'fixtures'
-PLAIN_JSON_DIR = path.join(FIXTURES_DIR, 'plain_json')
-PLAIN_YML_DIR = path.join(FIXTURES_DIR, 'plain_yaml')
-NESTED_JSON_DIR = path.join(FIXTURES_DIR, 'nested_json')
-NESTED_YML_DIR = path.join(FIXTURES_DIR, 'nested_yml')
+PLAIN_JSON_DIR = 'plain_json'
+PLAIN_YML_DIR = 'plain_yaml'
+NESTED_JSON_DIR = 'nested_json'
+NESTED_YML_DIR = 'nested_yml'
 
 
 def path_current(*paths):
-    return path.join(CURRENT_DIR, *paths)
+    return path.join(CURRENT_DIR, 'fixtures', *paths)
 
 
-def test_plain_json():
-    path_origin = path_current(PLAIN_JSON_DIR, 'plain_original.json')
-    path_modified = path_current(PLAIN_JSON_DIR, 'plain_modified.json')
-    path_diff = path_current(FIXTURES_DIR, 'stylish_plain_diff.txt')
-    res = generate_diff(path_origin, path_modified)
-    diff = open(path_diff).read()
-    assert res == diff
-
-
-def test_plain_yaml():
-    path_origin = path_current(PLAIN_YML_DIR, 'plain_original.yml')
-    path_modified = path_current(PLAIN_YML_DIR, 'plain_modified.yml')
-    path_diff = path_current(FIXTURES_DIR, 'stylish_plain_diff.txt')
-    res = generate_diff(path_origin, path_modified)
-    diff = open(path_diff).read()
-    assert res == diff
-
-
-def test_nested_json():
-    path_origin = path_current(NESTED_JSON_DIR, 'nested_original.json')
-    path_modified = path_current(NESTED_JSON_DIR, 'nested_modified.json')
-    path_diff = path_current(FIXTURES_DIR, 'stylish_nested_diff.txt')
-    res = generate_diff(path_origin, path_modified)
-
-    diff = open(path_diff).read()
-    assert res == diff
-
-
-def test_nested_yaml():
-    path_origin = path_current(NESTED_YML_DIR, 'nested_original.yml')
-    path_modified = path_current(NESTED_YML_DIR, 'nested_modified.yml')
-    path_diff = path_current(FIXTURES_DIR, 'stylish_nested_diff.txt')
-    res = generate_diff(path_origin, path_modified)
-    diff = open(path_diff).read()
-    assert res == diff
-
-
-def test_plain():
-    path_origin = path_current(NESTED_JSON_DIR, 'nested_original.json')
-    path_modified = path_current(NESTED_JSON_DIR, 'nested_modified.json')
-    path_diff = path_current(FIXTURES_DIR, 'plain_diff.txt')
-    res = generate_diff(path_origin, path_modified, out_format='plain')
-    diff = open(path_diff).read()
+@pytest.mark.parametrize(
+    'files_dir, path_origin, path_modified, path_diff, out_format',
+    [(PLAIN_JSON_DIR, 'plain_original.json', 'plain_modified.json',
+      'stylish_plain_diff.txt', 'stylish'),
+     (PLAIN_YML_DIR, 'plain_original.yml', 'plain_modified.yml',
+      'stylish_plain_diff.txt', 'stylish'),
+     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
+      'stylish_nested_diff.txt', 'stylish'),
+     (NESTED_YML_DIR, 'nested_original.yml', 'nested_modified.yml',
+      'stylish_nested_diff.txt', 'stylish'),
+     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
+      'plain_diff.txt', 'plain'),
+     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
+      'json_diff.json', 'json')
+     ])
+def test_plain_json(files_dir, path_origin, path_modified, path_diff,
+                    out_format):
+    res = generate_diff(path_current(files_dir, path_origin),
+                        path_current(files_dir, path_modified),
+                        out_format)
+    diff = open(path_current(path_diff)).read()
     assert res == diff
 
 
@@ -69,18 +47,3 @@ def test_parse_args():
                        params['second_file']])
     args_dict = vars(args)
     assert params == args_dict
-
-
-def test_json_diff():
-    path_origin = path_current(NESTED_JSON_DIR, 'nested_original.json')
-    path_modified = path_current(NESTED_JSON_DIR, 'nested_modified.json')
-    path_diff = path_current(FIXTURES_DIR, 'json_diff.json')
-    res = generate_diff(path_origin, path_modified, out_format='json')
-    diff = open(path_diff).read()
-    assert res == diff
-
-
-if __name__ == '__main__':
-    # test_plain()
-    test_json_diff()
-    # test_nested_json()

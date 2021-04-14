@@ -1,8 +1,20 @@
 from gendiff.logout import log_info
 from gendiff.open_source import open_source
 from gendiff.parse_source import parse
-from gendiff.make_inner_diff import make_inner_diff
-from gendiff.formatters.make_format import make_format
+
+KEY_KEY = '_KEY_'
+KEY_STATUS = '_STATUS_'
+KEY_VALUE = '_VALUE_'
+KEY_CHILDREN = '_CHILDREN_'
+STATUS_STAY = '_STAY_'
+STATUS_DEL = '_DEL_'
+STATUS_NEW = '_NEW_'
+STATUS_CHANGE = '_CHANGE_'
+VALUE_STAY = '_STAY_'
+VALUE_DEL = '_DEL_'
+VALUE_NEW = '_NEW_'
+
+from gendiff.formatters.make_format import make_format  # noqa: E402
 
 
 def generate_diff(file_old, file_new, out_format='stylish'):
@@ -11,7 +23,7 @@ def generate_diff(file_old, file_new, out_format='stylish'):
 
     diff = []
     if data_old is not None and data_new is not None:
-        inner_diff = make_inner_diff(data_old, data_new)
+        inner_diff = get_inner_diff(data_old, data_new)
         log_info('inner_diff', inner_diff)
         diff = make_format(inner_diff, out_format)
     return diff
@@ -21,3 +33,41 @@ def source_to_data(source):
     data_source, format_source = open_source(source)
     data = parse(data_source, format_source)
     return data
+
+
+def get_inner_diff(old_data, new_data, root_key=''):
+    children = []
+    old_keys = set(old_data.keys())
+    new_keys = set(new_data.keys())
+    for key in new_keys - old_keys:
+        children.append({KEY_KEY: key,
+                         KEY_STATUS: STATUS_NEW,
+                         KEY_VALUE: {VALUE_NEW: new_data[key]}})
+    for key in old_keys - new_keys:
+        children.append({KEY_KEY: key,
+                         KEY_STATUS: STATUS_DEL,
+                         KEY_VALUE: {VALUE_DEL: old_data[key]}})
+    for key in old_keys & new_keys:
+        if isinstance(old_data[key], dict) and isinstance(new_data[key],
+                                                          dict):
+            stay_key = get_inner_diff(old_data[key], new_data[key], key)
+        else:
+            stay_key = {KEY_KEY: key}
+            if old_data[key] == new_data[key]:
+                stay_key.update({KEY_STATUS: STATUS_STAY,
+                                 KEY_VALUE: {VALUE_STAY: old_data[key]}})
+            else:
+                stay_key.update({KEY_STATUS: STATUS_CHANGE,
+                                 KEY_VALUE: {VALUE_DEL: old_data[key],
+                                             VALUE_NEW: new_data[key]}})
+
+        children.append(stay_key)
+        children.sort(key=get_key)
+
+    res = {KEY_KEY: root_key,
+           KEY_CHILDREN: children}
+    return res
+
+
+def get_key(inner_diff):
+    return inner_diff[KEY_KEY]

@@ -26,15 +26,14 @@ SET_TESTING_DATA = [
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
      'plain_diff.txt', 'plain'),
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
-     'json_diff.json', 'json')
-    ]
+     'json_diff.json', 'json')]
 
 
 @pytest.mark.parametrize(
     'files_dir, path_origin, path_modified, path_diff, out_format',
     SET_TESTING_DATA)
 def test_gendiff(files_dir, path_origin, path_modified, path_diff,
-                    out_format):
+                 out_format):
     res = generate_diff(path_current(files_dir, path_origin),
                         path_current(files_dir, path_modified),
                         out_format)

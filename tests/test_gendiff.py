@@ -33,7 +33,7 @@ SET_TESTING_DATA = [
 @pytest.mark.parametrize(
     'files_dir, path_origin, path_modified, path_diff, out_format',
     SET_TESTING_DATA)
-def test_plain_json(files_dir, path_origin, path_modified, path_diff,
+def test_gendiff(files_dir, path_origin, path_modified, path_diff,
                     out_format):
     res = generate_diff(path_current(files_dir, path_origin),
                         path_current(files_dir, path_modified),

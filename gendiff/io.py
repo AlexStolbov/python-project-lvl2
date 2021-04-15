@@ -1,7 +1,7 @@
 from gendiff.parse_source import JSON_FORMAT, YAML_FORMAT
 
 
-def open_source(file_path):
+def load(file_path):
     """
     Load file from file system
     """

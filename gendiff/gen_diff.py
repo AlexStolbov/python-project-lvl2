@@ -1,5 +1,5 @@
 from gendiff.logout import log_info
-from gendiff.open_source import open_source
+import gendiff.io as io
 from gendiff.parse_source import parse
 
 KEY_KEY = '_KEY_'
@@ -30,7 +30,7 @@ def generate_diff(file_old, file_new, out_format='stylish'):
 
 
 def source_to_data(source):
-    data_source, format_source = open_source(source)
+    data_source, format_source = io.load(source)
     data = parse(data_source, format_source)
     return data
 

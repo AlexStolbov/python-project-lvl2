@@ -1,4 +1,4 @@
-from gendiff.logout import log_info
+from gendiff.out_log import log_info
 import gendiff.gen_diff as gen_diff
 
 DESCR_TEMPLATE = {

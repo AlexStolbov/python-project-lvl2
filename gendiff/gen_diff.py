@@ -1,4 +1,4 @@
-from gendiff.logout import log_info
+from gendiff.out_log import log_info
 import gendiff.io as io
 from gendiff.parsing import parse
 
@@ -14,7 +14,7 @@ VALUE_STAY = '_STAY_'
 VALUE_DEL = '_DEL_'
 VALUE_NEW = '_NEW_'
 
-from gendiff.formatters.make_format import make_format  # noqa: E402
+from gendiff.formatters.format import format_diff  # noqa: E402
 
 
 def generate_diff(file_old, file_new, out_format='stylish'):
@@ -25,7 +25,7 @@ def generate_diff(file_old, file_new, out_format='stylish'):
     if data_old is not None and data_new is not None:
         inner_diff = get_inner_diff(data_old, data_new)
         log_info('inner_diff', inner_diff)
-        diff = make_format(inner_diff, out_format)
+        diff = format_diff(inner_diff, out_format)
     return diff
 
 

@@ -1,6 +1,6 @@
 from gendiff.logout import log_info
 import gendiff.io as io
-from gendiff.parse_source import parse
+from gendiff.parsing import parse
 
 KEY_KEY = '_KEY_'
 KEY_STATUS = '_STATUS_'

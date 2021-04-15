@@ -1,4 +1,4 @@
-from gendiff.parse_source import JSON_FORMAT, YAML_FORMAT
+from gendiff.parsing import JSON_FORMAT, YAML_FORMAT
 
 
 def load(file_path):

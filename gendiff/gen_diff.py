@@ -21,11 +21,12 @@ def generate_diff(file_old, file_new, out_format='stylish'):
     data_old = source_to_data(file_old)
     data_new = source_to_data(file_new)
 
-    diff = []
     if data_old is not None and data_new is not None:
         inner_diff = get_inner_diff(data_old, data_new)
         log_info('inner_diff', inner_diff)
         diff = format_diff(inner_diff, out_format)
+    else:
+        diff = ''
     return diff
 
 

@@ -11,4 +11,4 @@ def load(file_path):
     elif '.yml' in file_path:
         return open(file_path), YAML_FORMAT
     else:
-        return None
+        return None, None

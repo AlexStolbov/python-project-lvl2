@@ -26,7 +26,9 @@ SET_TESTING_DATA = [
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
      'plain_diff.txt', 'plain'),
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
-     'json_diff.json', 'json')]
+     'json_diff.json', 'json'),
+    (NESTED_JSON_DIR, 'nested_original.json', '',
+     'empty.txt', '')]
 
 
 @pytest.mark.parametrize(

@@ -1,6 +1,6 @@
 from gendiff.out_log import log_info
 import gendiff.io as io
-from gendiff.parsing import parse
+import gendiff.parsing as parsing
 
 KEY_KEY = '_KEY_'
 KEY_STATUS = '_STATUS_'
@@ -18,22 +18,21 @@ from gendiff.formatters.format import format_diff  # noqa: E402
 
 
 def generate_diff(file_old, file_new, out_format='stylish'):
-    data_old = source_to_data(file_old)
-    data_new = source_to_data(file_new)
+    data_old = get_data(file_old)
+    data_new = get_data(file_new)
 
-    if data_old is not None and data_new is not None:
-        inner_diff = get_inner_diff(data_old, data_new)
-        log_info('inner_diff', inner_diff)
-        diff = format_diff(inner_diff, out_format)
-    else:
-        diff = ''
+    inner_diff = get_inner_diff(data_old, data_new)
+    log_info('inner_diff', inner_diff)
+    diff = format_diff(inner_diff, out_format)
+
     return diff
 
 
-def source_to_data(source):
-    data_source, format_source = io.load(source)
-    data = parse(data_source, format_source)
-    return data
+def get_data(source):
+    parser = get_parser(source)
+    data = io.load(source)
+    parsed = parser(data)
+    return parsed
 
 
 def get_inner_diff(old_data, new_data, root_key=''):
@@ -72,3 +71,13 @@ def get_inner_diff(old_data, new_data, root_key=''):
 
 def get_key(inner_diff):
     return inner_diff[KEY_KEY]
+
+
+def get_parser(file_path):
+    if '.json' in file_path:
+        parser = parsing.parse_json
+    elif '.yml' in file_path:
+        parser = parsing.parse_yaml
+    else:
+        raise ValueError('can\'t detect format for: {}'.format(file_path))
+    return parser

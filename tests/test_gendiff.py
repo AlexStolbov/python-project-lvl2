@@ -26,9 +26,7 @@ SET_TESTING_DATA = [
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
      'plain_diff.txt', 'plain'),
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
-     'json_diff.json', 'json'),
-    (NESTED_JSON_DIR, 'nested_original.json', '',
-     'empty.txt', '')]
+     'json_diff.json', 'json')]
 
 
 @pytest.mark.parametrize(
@@ -49,6 +47,13 @@ def test_gendiff_unknown_format():
             path_current(PLAIN_JSON_DIR, 'plain_original.json'),
             path_current(PLAIN_JSON_DIR, 'plain_modified.json'),
             'unknown_format')
+
+
+def test_gendiff_skipped_one_file():
+    with pytest.raises(ValueError):
+        assert generate_diff(
+            path_current(PLAIN_JSON_DIR, 'plain_original.json'),
+            '')
 
 
 def test_parse_args():

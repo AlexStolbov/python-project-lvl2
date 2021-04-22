@@ -43,6 +43,14 @@ def test_gendiff(files_dir, path_origin, path_modified, path_diff,
     assert res == diff
 
 
+def test_gendiff_unknown_format():
+    with pytest.raises(ValueError):
+        assert generate_diff(
+            path_current(PLAIN_JSON_DIR, 'plain_original.json'),
+            path_current(PLAIN_JSON_DIR, 'plain_modified.json'),
+            'unknown_format')
+
+
 def test_parse_args():
     params = {'first_file': 'file1',
               'second_file': 'file2',

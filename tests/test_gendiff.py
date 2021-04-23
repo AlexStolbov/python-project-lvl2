@@ -2,6 +2,7 @@ from os import path
 import pytest
 from gendiff.cli import parse_args
 from gendiff.gen_diff import generate_diff
+import json
 
 CURRENT_DIR = path.dirname(__file__)
 PLAIN_JSON_DIR = 'plain_json'
@@ -24,9 +25,7 @@ SET_TESTING_DATA = [
     (NESTED_YML_DIR, 'nested_original.yml', 'nested_modified.yml',
      'stylish_nested_diff.txt', 'stylish'),
     (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
-     'plain_diff.txt', 'plain'),
-    (NESTED_JSON_DIR, 'nested_original.json', 'nested_modified.json',
-     'json_diff.json', 'json')]
+     'plain_diff.txt', 'plain')]
 
 
 @pytest.mark.parametrize(
@@ -54,6 +53,15 @@ def test_gendiff_skipped_one_file():
         assert generate_diff(
             path_current(PLAIN_JSON_DIR, 'plain_original.json'),
             '')
+
+
+def test_format_json():
+    res = generate_diff(path_current(NESTED_JSON_DIR, 'nested_original.json'),
+                        path_current(NESTED_JSON_DIR, 'nested_modified.json'),
+                        'json')
+    j1 = json.loads(res)
+    j2 = json.load(open(path_current('json_diff.json')))
+    assert j1 == j2
 
 
 def test_parse_args():

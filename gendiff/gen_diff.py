@@ -31,6 +31,8 @@ def generate_diff(file_old, file_new, out_format='stylish'):
 def get_data(source):
     parser = get_parser(source)
     data = io.load(source)
+    if not data:
+        raise ValueError('empty data in: {}'.format(source))
     parsed = parser(data)
     return parsed
 

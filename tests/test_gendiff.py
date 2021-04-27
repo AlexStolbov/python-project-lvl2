@@ -51,7 +51,8 @@ def test_gendiff_unknown_format():
 def test_gendiff_skipped_one_file():
     with pytest.raises(ValueError):
         assert generate_diff(
-            path_current(PLAIN_JSON_DIR, 'plain_original.json'))
+            path_current(PLAIN_JSON_DIR, 'plain_original.json'),
+            '')
 
 
 def test_gendiff_empty_file():
